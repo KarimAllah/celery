@@ -1,0 +1,25 @@
+#Wed Jan 04 14:37:43 EET 2012
+eclipse.preferences.version=1
+encoding//celery/app/__init__.py=utf-8
+encoding//celery/app/amqp.py=utf-8
+encoding//celery/app/base.py=utf-8
+encoding//celery/app/defaults.py=utf-8
+encoding//celery/app/task/__init__.py=utf-8
+encoding//celery/apps/beat.py=utf-8
+encoding//celery/apps/worker.py=utf-8
+encoding//celery/backends/amqp.py=utf-8
+encoding//celery/backends/base.py=utf-8
+encoding//celery/backends/mongodb.py=utf-8
+encoding//celery/conf.py=utf-8
+encoding//celery/contrib/rdb.py=utf-8
+encoding//celery/loaders/app.py=utf-8
+encoding//celery/loaders/base.py=utf-8
+encoding//celery/loaders/default.py=utf-8
+encoding//celery/messaging.py=utf-8
+encoding//celery/result.py=utf-8
+encoding//celery/states.py=utf-8
+encoding//celery/task/__init__.py=utf-8
+encoding//celery/task/base.py=utf-8
+encoding//celery/task/sets.py=utf-8
+encoding//celery/worker/consumer.py=utf-8
+encoding//celery/worker/job.py=utf-8
