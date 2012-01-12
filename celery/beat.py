@@ -287,21 +287,39 @@ class Scheduler(object):
     def set_schedule(self, schedule):
         self.data = schedule
 
+    _connection = None
     def _ensure_connected(self):
         # callback called for each retry while the connection
         # can't be established.
         def _error_handler(exc, interval):
-            self.logger.error("Celerybeat: Connection error: %s. "
-                              "Trying again in %s seconds...", exc, interval)
+            self.logger.error("Celerybeat: Connection error: %s. .. Trial no. (%s)", exc, interval)
+            if interval == 4:
+                    raise Exception()
 
-        return self.connection.ensure_connection(_error_handler,
-                    self.app.conf.BROKER_CONNECTION_MAX_RETRIES)
+        initial= True
+        while True:
+            try:
+                if self._connection:
+                    self._connection.ensure_connection(_error_handler, self.app.conf.BROKER_CONNECTION_MAX_RETRIES)
+                else:
+                    self._connection = self.get_next_connection(not initial).ensure_connection(_error_handler,
+                                            self.app.conf.BROKER_CONNECTION_MAX_RETRIES)
+                break
+            except:
+                self.logger.info("Moving to the next broker due to connection failure")
+                self._connection = None
+                initial = False
+
+        return self._connection
+
+    def get_next_connection(self, next= False):
+        return self.app.broker_connection(next_connection=next)
 
     @cached_property
     def connection(self):
         return self.app.broker_connection()
 
-    @cached_property
+    @property
     def publisher(self):
         return self.Publisher(connection=self._ensure_connected())
 

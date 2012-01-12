@@ -231,6 +231,7 @@ class TaskPublisher(messaging.Publisher):
 
         do_retry = retry if retry is not None else self.retry
         send = self.send
+
         if do_retry:
             send = connection.ensure(self, self.send, **_retry_policy)
         send(body, exchange=exchange, **extract_msg_options(kwargs))

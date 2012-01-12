@@ -129,7 +129,7 @@ NAMESPACES = {
             deprecate_by="2.5", remove_by="3.0"),
         "TASK_PUBLISH_RETRY": Option(True, type="bool"),
         "TASK_PUBLISH_RETRY_POLICY": Option({
-                "max_retries": 100,
+                "max_retries": 5,
                 "interval_start": 0,
                 "interval_max": 1,
                 "interval_step": 0.2}, type="dict"),
