@@ -315,6 +315,9 @@ class Consumer(object):
                 self.logger.error("Consumer: Connection to broker lost."
                                 + " Trying to re-establish the connection...",
                                 exc_info=sys.exc_info())
+            except:
+                initial = False
+                
 
     def consume_messages(self):
         """Consume messages forever (or until an exception is raised)."""
