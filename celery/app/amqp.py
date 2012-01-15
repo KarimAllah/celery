@@ -75,10 +75,10 @@ class Queues(dict):
 
         """
         try:
-            queue_argument = options['queue_argumet']
-            queue_argument['x-ha-policy'] = 'all'
+            queue_arguments = options['queue_argumets']
+            queue_arguments['x-ha-policy'] = 'all'
         except KeyError:
-            options['queue_argument'] = {'x-ha-policy': 'all'}
+            options['queue_arguments'] = {'x-ha-policy': 'all'}
 
         options = dict(options, )
         q = self[queue] = self.options(exchange, routing_key,
