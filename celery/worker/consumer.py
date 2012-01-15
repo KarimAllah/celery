@@ -312,11 +312,7 @@ class Consumer(object):
                 self.consume_messages()
             except self.connection_errors:
                 initial = False
-                self.logger.error("Consumer: Connection to broker lost. Trying to re-establish the connection...")
-            except:
-                initial = False
-                self.logger.error("Moving to next broker, due to failure.")
-                
+                self.logger.error("Consumer: Connection to broker lost. Trying to re-establish the connection with the next broker")
 
     def consume_messages(self):
         """Consume messages forever (or until an exception is raised)."""
