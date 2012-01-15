@@ -74,12 +74,6 @@ class Queues(dict):
         :keyword \*\*options: Additional declaration options.
 
         """
-        try:
-            queue_arguments = options['queue_argumets']
-            queue_arguments['x-ha-policy'] = 'all'
-        except KeyError:
-            options['queue_arguments'] = {'x-ha-policy': 'all'}
-
         options = dict(options, )
         q = self[queue] = self.options(exchange, routing_key,
                                        exchange_type, **options)
@@ -89,6 +83,16 @@ class Queues(dict):
             exchange_type="direct", **options):
         """Creates new option mapping for queue, with required
         keys present."""
+        
+        if not options:
+            options = {}
+
+        try:
+            queue_arguments = options['queue_arguments']
+            queue_arguments['x-ha-policy'] = 'all'
+        except KeyError:
+            options['queue_arguments'] = {'x-ha-policy': 'all'}
+        
         return dict(options, routing_key=routing_key,
                              binding_key=routing_key,
                              exchange=exchange,
