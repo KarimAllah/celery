@@ -109,7 +109,7 @@ class AMQPBackend(BaseDictBackend):
         with self.mutex:
             first_trial = True
             succeeded = False
-            #FIXME: Configurable timeout.
+            count = 0
             while True:
                 pool = self.app.get_pool(next_connection_pool=not first_trial)
                 with pool.acquire() as conn:
@@ -132,6 +132,9 @@ class AMQPBackend(BaseDictBackend):
                         break
                     except:
                         first_trial = False
+                        if count >= 5:
+                            raise
+                        count += 1
 
         if not succeeded:
             raise Exception("Your idiot")

@@ -297,6 +297,7 @@ class Scheduler(object):
                     raise Exception()
 
         initial= True
+        count = 0
         while True:
             try:
                 if self._connection:
@@ -309,6 +310,9 @@ class Scheduler(object):
                 self.logger.info("Moving to the next broker due to connection failure")
                 self._connection = None
                 initial = False
+                if count >= 5:
+                    raise
+                count += 1
 
         return self._connection
 

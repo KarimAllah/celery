@@ -312,11 +312,10 @@ class Consumer(object):
                 self.consume_messages()
             except self.connection_errors:
                 initial = False
-                self.logger.error("Consumer: Connection to broker lost."
-                                + " Trying to re-establish the connection...",
-                                exc_info=sys.exc_info())
+                self.logger.error("Consumer: Connection to broker lost. Trying to re-establish the connection...")
             except:
                 initial = False
+                self.logger.error("Moving to next broker, due to failure.")
                 
 
     def consume_messages(self):

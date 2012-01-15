@@ -443,6 +443,7 @@ class BaseTask(object):
         expires = expires or self.expires
 
         next = False
+        count = 0
         while True:
             try:
                 publish = publisher or self.app.amqp.get_publisher_pool(next).acquire(block=True)
@@ -456,7 +457,10 @@ class BaseTask(object):
                     publish.release()
                 except:
                     pass
-            
+                if count >= 5:
+                    raise
+                count += 1
+
         evd = None
         if conf.CELERY_SEND_TASK_SENT_EVENT:
             evd = self.app.events.Dispatcher(channel=publish.channel,
