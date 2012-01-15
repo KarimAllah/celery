@@ -74,6 +74,13 @@ class Queues(dict):
         :keyword \*\*options: Additional declaration options.
 
         """
+        try:
+            queue_argument = options['queue_argumet']
+            queue_argument['x-ha-policy'] = 'all'
+        except KeyError:
+            options['queue_argument'] = {'x-ha-policy': 'all'}
+
+        options = dict(options, )
         q = self[queue] = self.options(exchange, routing_key,
                                        exchange_type, **options)
         return q

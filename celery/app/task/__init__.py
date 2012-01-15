@@ -448,7 +448,14 @@ class BaseTask(object):
                 publish = publisher or self.app.amqp.get_publisher_pool(next).acquire(block=True)
                 break
             except:
+                if publisher:
+                    break
+
                 next = True
+                try:
+                    publish.release()
+                except:
+                    pass
             
         evd = None
         if conf.CELERY_SEND_TASK_SENT_EVENT:
